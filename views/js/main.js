@@ -509,6 +509,10 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
   //}
   
   function updatePositions(timestamp) {
+    frame++;
+    window.performance.mark("mark_start_frame");
+    
+    var items = document.querySelectorAll('.mover');
     for (var i = 0; i < items.length; i++) {
         items[i].style.left = ((Math.sin(i + timestamp/1000)+1) * 500) + 'px';
         }
