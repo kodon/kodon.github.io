@@ -525,7 +525,7 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 20; i++) { // I changed 200 to 20
+  for (var i = 0; i < 20; i++) { // I changed 200 to 20 - I got the idea from Jimo - https://discussions.udacity.com/t/style-transform-question-p4/14052
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
