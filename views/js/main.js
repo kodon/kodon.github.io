@@ -482,7 +482,7 @@ console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "
 
 // Iterator for number of times the pizzas in the background have scrolled.
 // Used by updatePositions() to decide when to log the average time per frame
-var frame = 0;
+// var frame = 0;
 
 // Logs the average amount of time per 10 frames needed to move the sliding background pizzas on scroll.
 function logAverageFrame(times) {   // times is the array of User Timing measurements from updatePositions()
@@ -498,15 +498,59 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
 // Moves the sliding background pizzas based on scroll position
-function updatePositions() {
-  frame++;
-  window.performance.mark("mark_start_frame");
+//function updatePositions() {
+  //frame++;
+  //window.performance.mark("mark_start_frame");
 
-  var items = document.querySelectorAll('.mover');
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+  //var items = document.querySelectorAll('.mover');
+  //for (var i = 0; i < items.length; i++) {
+    //var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+  //}
+  
+var movers          = document.querySelectorAll('.mover'),
+var lastScrollY     = 0,
+var ticking         = false;
+
+(function init() {
+  for(var m = 0; m < movers.length; m++) {
+    movers[m].style.top = (m * 10) + 'px';
   }
+})();
+
+function onScroll() {
+  lastScrollY = window.scrollY;
+  requestTick();
+}
+
+function requestTick() {
+  if(!ticking) {
+    requestAnimationFrame(update);
+    ticking = true;
+  }
+}
+
+function update() {
+  var mover = null,
+  var moverTop = [],
+  var halfWindowHeight = window.innerHeight * 0.5,
+  var offset = 0;
+
+  for(var m = 0; m < movers.length; m++) {
+    mover = movers[m];
+    moverTop[m] = mover.offsetTop;
+  }
+    
+  for(var m = 0; m < movers.length; m++) {
+    mover = movers[m];
+    if(lastScrollY > moverTop[m] - halfWindowHeight) {
+      mover.classList.add('left');
+    } else {
+      mover.classList.remove('left');
+    }
+  }
+  ticking = false;
+}
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
@@ -519,7 +563,8 @@ function updatePositions() {
 }
 
 // runs updatePositions on scroll
-window.addEventListener('scroll', updatePositions);
+// window.addEventListener('scroll', updatePositions);
+window.addEventListener('scroll', onScroll, false); // changed
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
