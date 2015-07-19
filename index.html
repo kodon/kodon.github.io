@@ -7,7 +7,8 @@
     <meta name="author" content=" FILL ME IN ">
     <title>Cameron Pittman: Portfolio</title>
 
-    <!-- I added this... -->
+    <!-- I added this at the recommendation of https://discussions.udacity.com/t/pagespeed-insights/12665/6 
+    and https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery#example -->
     <script>
        var cb = function() {
          var l = document.createElement('link'); l.rel = 'stylesheet';
@@ -20,7 +21,7 @@
       else window.addEventListener('load', cb);
      </script>
    
-    <!-- I added the in-line css -->
+    <!-- I added the in-line css at the recommendation of https://developers.google.com/speed/docs/insights/InlineCSS -->
     <style>
       html {
        font-size: 100%;
@@ -120,7 +121,7 @@
       <p>&copy; Web Performance 2014 <span id="crp-stats"></span></p>
     </footer>
     
-    <!-- I moved the JavaScript down below the footer at the recommendation of 
+    <!-- I moved this JavaScript down below the footer at the recommendation of 
     https://developers.google.com/speed/docs/insights/BlockingJS and added "async" before the first file -->
     
     <script>
